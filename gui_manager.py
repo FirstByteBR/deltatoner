@@ -95,10 +95,20 @@ class CustomWindow(QtWidgets.QWidget):
         controls_layout.addWidget(self.indicator, 0, 0)
 
         # Auto TTS Button
+        self.auto_tts_img = QtGui.QIcon(img("KeyerIdle.png"))
+        self.auto_tts_img_hover = QtGui.QIcon(img("KeyerHover.png"))
+        self.auto_tts_img_press = QtGui.QIcon(img("KeyerPress.png"))
+        self.auto_tts_img_active = QtGui.QIcon(img("KeyerIdleAlt.png"))
+        self.auto_tts_img_active_hover = QtGui.QIcon(img("KeyerHoverAlt.png"))
+        self.auto_tts_img_active_press = QtGui.QIcon(img("KeyerPressAlt.png"))
+        
         self.auto_tts_btn = QtWidgets.QPushButton()
         self.auto_tts_btn.setCheckable(True)  # Make the button toggleable
         self.auto_tts_btn.setChecked(False)   # Initial state: off
-        self.auto_tts_btn.setIcon(QtGui.QIcon(img("keyer.png")))
+        self.auto_tts_btn.setIcon(self.auto_tts_img)
+        self.auto_tts_btn.enterEvent = lambda e: self.auto_tts_btn.setIcon(self.auto_tts_img_hover)
+        self.auto_tts_btn.leaveEvent = lambda e: self.auto_tts_btn.setIcon(self.auto_tts_img)
+        self.auto_tts_btn.pressed.connect(lambda: self.auto_tts_btn.setIcon(self.auto_tts_img_press))
         self.auto_tts_btn.setIconSize(QtCore.QSize(48, 48))
         self.auto_tts_btn.setStyleSheet("border: none; background: transparent;")
         self.auto_tts_btn.toggled.connect(self._toggle_auto_tts)
@@ -396,10 +406,16 @@ class CustomWindow(QtWidgets.QWidget):
         if checked:
             self.start_auto_tts()
             if self.audio_manager.is_running:
-                self.auto_tts_btn.setIcon(QtGui.QIcon("assets/keyer_on.png"))
+                self.auto_tts_btn.setIcon(self.auto_tts_img_active)
+                self.auto_tts_btn.enterEvent = lambda e: self.auto_tts_btn.setIcon(self.auto_tts_img_active_hover)
+                self.auto_tts_btn.leaveEvent = lambda e: self.auto_tts_btn.setIcon(self.auto_tts_img_active)
+                self.auto_tts_btn.pressed.connect(lambda: self.auto_tts_btn.setIcon(self.auto_tts_img_active_press))
         else:
             self.stop_auto_tts()
-            self.auto_tts_btn.setIcon(QtGui.QIcon("assets/keyer.png"))
+            self.auto_tts_btn.setIcon(self.auto_tts_img)
+            self.auto_tts_btn.enterEvent = lambda e: self.auto_tts_btn.setIcon(self.auto_tts_img_hover)
+            self.auto_tts_btn.leaveEvent = lambda e: self.auto_tts_btn.setIcon(self.auto_tts_img)
+            self.auto_tts_btn.pressed.connect(lambda: self.auto_tts_btn.setIcon(self.auto_tts_img_press))
     
     @QtCore.pyqtSlot(str)
     def _on_phrase_detected(self, phrase):
