@@ -6,7 +6,11 @@
  - Easily customizabe (add new sounds and characters!)
  - 3 default characters (sans, spamton and tenna)
  - Deltarune themed UI
-# Installation
+# Installation and tutorials
+## Video tutorial!
+This video explains how to set up and use DeltaToner!
+[Watch it on YouTube](https://www.youtube.com/watch?v=vBfDg1tNhOE)
+
 ## Before you start
 As the app is written in Python, you'll need the python interpreter to run it. Download it [here](https://www.python.org/downloads/) (version `3.12.10` is recommended as it's the version the program was made in)
 
